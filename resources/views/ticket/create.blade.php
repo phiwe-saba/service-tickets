@@ -1,24 +1,24 @@
 @extends('layouts.app')
-@section
+@section('content')
 <div class="container">
     @csrf
 
-    <form action="" method="POST">
+    <form action="{{ route('ticket.store') }}" method="POST" encrypt="multipart/form-data">
         @csrf
 
         <div class="form-group">
-            <label for="user">Name:</label>
-            <input type="text" name="name" id="user" class="form-control">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" class="form-control">
         </div>
 
         <div class="form-group">
-            <label for="user">Surname:</label>
-            <input type="text" name="surname" id="user" class="form-control">
+            <label for="surname">Surname:</label>
+            <input type="text" name="surname" id="surname" class="form-control">
         </div>
 
         <div class="form-group">
-            <label for="user">Email:</label>
-            <input type="text" name="email" id="user" class="form-control">
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email" class="form-control">
         </div>
 
         <div class="form-group">
@@ -40,7 +40,7 @@
         </div>
 
         <div class="form-group">
-            <label for="ticket">Description:</label>
+            <label for="description">Description:</label>
             <input type="text" name="description" id="description" class="form-control">
         </div>
 

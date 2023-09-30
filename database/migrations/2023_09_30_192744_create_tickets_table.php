@@ -23,7 +23,7 @@ return new class extends Migration
             // Define foreign key constraints
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('department_id')->references('id')->on('departments');
-            $table->foreign('status_id')->references('id')->on('status');
+            $table->foreign('status_id')->references('id')->on('statuses');
         });
     }
 
