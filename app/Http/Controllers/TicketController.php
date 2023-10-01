@@ -6,13 +6,28 @@ use App\Models\Department;
 use App\Models\Status;
 use App\Models\User;
 use App\Models\Ticket;
+use App\Notifications\TicketNotification;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
     public function index(){
-        return view('ticket.index');
+        $user = Auth::user();
+
+        $tickets = $user->tickets;
+        $tickets = Ticket::with('user')->get();
+        $tickets = Ticket::with('department')->get();
+        $tickets = Ticket::with('status')->get();
+
+        return view('ticket.index', compact('tickets'));
+    }
+
+    /* Function to show the ticket details (in detail)*/
+    public function show()
+    {
+        return view('ticket.show');
     }
 
     /* function to create the create page */
@@ -52,14 +67,29 @@ class TicketController extends Controller
             'date_logged' => $viewData['date_logged'],
         ]);
 
-        //$ticket->departments()->associate($viewData['department']);
-        //$ticket->statuses()->associate($viewData['status']);
-        //dd($ticket);
-        //$user->ticket()->save($ticket);
-        //$ticket->department()->associate(Department::firstOrCreate(['dep_name' => $viewData['department']]));
-        //$ticket->status()->associate(Status::firstOrCreate(['status_name' => $viewData['status']]));
         $user->ticket()->save($ticket);
-        //dd($ticket);
+
+        //$user->notify(new TicketNotification($ticket)); //notification to send via email
+
         return redirect()->route('ticket.index')->with('success', 'Ticket successfully logged');
+    }
+
+    public function edit(Ticket $ticket){
+        return view('ticket.edit', compact('ticket'));
+    }
+    
+    //Function to update the status and department
+    public function update(Request $request, Ticket $ticket){
+        $viewData = $request->validate([
+            'department' => 'required|exists:departments,id',
+            'status' => 'required|exists:statuses,id',
+        ]);
+
+        $ticket->update([
+            'department_id' => $viewData['dep_name'],
+            'status_id' => $viewData['status_name']
+        ]);
+
+        return redirect()->route('ticket.show', $ticket->id)->with('success', 'Ticket successfully updated');
     }
 }
