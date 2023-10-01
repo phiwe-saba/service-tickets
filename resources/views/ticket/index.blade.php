@@ -3,9 +3,7 @@
 <div class="container">
     <h1>Tickets</h1>
     
-    <button class="btn btn-primary ">
-        <a href="{{ route('ticket.create') }}">Create ticket</a>
-    </button>
+    <a href="{{ route('ticket.create') }}" class="btn btn-primary ">Create ticket</a>
 
     <table class="admin table table-hover">
         <thead>

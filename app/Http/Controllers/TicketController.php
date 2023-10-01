@@ -57,6 +57,7 @@ class TicketController extends Controller
             return redirect()->back()->with('error', 'User not found.');
         }
 
+        //creating a new ticket
         $ticket = new Ticket([
             'name' => $viewData['name'],
             'surname' => $viewData['surname'],
@@ -74,22 +75,4 @@ class TicketController extends Controller
         return redirect()->route('ticket.index')->with('success', 'Ticket successfully logged');
     }
 
-    public function edit(Ticket $ticket){
-        return view('ticket.edit', compact('ticket'));
-    }
-    
-    //Function to update the status and department
-    public function update(Request $request, Ticket $ticket){
-        $viewData = $request->validate([
-            'department' => 'required|exists:departments,id',
-            'status' => 'required|exists:statuses,id',
-        ]);
-
-        $ticket->update([
-            'department_id' => $viewData['dep_name'],
-            'status_id' => $viewData['status_name']
-        ]);
-
-        return redirect()->route('ticket.show', $ticket->id)->with('success', 'Ticket successfully updated');
-    }
 }

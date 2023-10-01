@@ -32,7 +32,7 @@ Route::put('ticket/{ticket}', 'App\Http\Controllers\TicketController@update')->n
 Route::get('/admin', 'App\Http\Controllers\AdminController@index')->name('admin.index');
 Route::get('/admin/show/{id}', 'App\Http\Controllers\AdminController@show')->name('admin.show');
 Route::get('/admin/{id}/edit', 'App\Http\Controllers\AdminController@edit')->name('admin.edit');
-Route::put('/admin/{id}', 'App\Http\Controllers\AdminController@update')->name('admin.update');
+Route::put('/admin/{id}/', 'App\Http\Controllers\AdminController@update')->name('admin.update');
 
 //Route::middleware(['auth', 'admin'])->group(function (){
     //Route::get('/admin', 'App\Http\Controllers\AdminController@index')->name('admin.index');
@@ -50,4 +50,4 @@ Route::put('/admin/{id}', 'App\Http\Controllers\AdminController@update')->name('
 
 Auth::routes();
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

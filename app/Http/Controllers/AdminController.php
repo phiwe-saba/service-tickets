@@ -77,14 +77,14 @@ class AdminController extends Controller
         return redirect()->route('ticket.index')->with('success', 'Ticket successfully logged');
     }
 
-    /* Retrieve the ticket based on the id */
+    /* Retrieve the data based on the id */
     public function edit($id){
         $ticket = Ticket::findOrFail($id);
-
-        $user = User::all();
+        $users = User::findOrFail($id);
         $departments = Department::all();
         $statuses = Status::all();
-        return view('admin.edit', compact('ticket', 'departments', 'statuses'));
+
+        return view('admin.edit', compact('ticket', 'departments', 'statuses', 'users'));
     }
     
     //Function to update the status and department
@@ -102,6 +102,7 @@ class AdminController extends Controller
             'email' => $request->input('email'),
             'department_id' => $request->input('department_id'),
             'status_id' => $request->input('status_id'),
+            //'description' => $request
         ]);
 
         return redirect()->route('admin.show', ['id' => $ticket->id])->with('success', 'Ticket successfully updated');
